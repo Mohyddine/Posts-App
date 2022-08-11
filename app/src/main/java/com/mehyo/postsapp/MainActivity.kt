@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.mehyo.postsapp.databinding.ActivityMainBinding
 
+
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
+
     private lateinit var binding: ActivityMainBinding
-    private var navController: NavController? = null
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,9 +20,11 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         setContentView(binding.root)
 
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment?
-        navController = navHostFragment?.navController
-        navController?.addOnDestinationChangedListener(this)
+            supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+        navController = navHostFragment.navController
+        navController.addOnDestinationChangedListener(this)
+
+        setupActionBarWithNavController(navController)
     }
 
     override fun onDestinationChanged(
@@ -28,5 +33,12 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         arguments: Bundle?
     ) {
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

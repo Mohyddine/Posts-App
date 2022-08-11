@@ -9,6 +9,6 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.mehyo.postsapp.HomeFragment"
-        android:label="fragment_home"
+        android:label="My Posts"
         tools:layout="@layout/fragment_home" />
 </navigation>
