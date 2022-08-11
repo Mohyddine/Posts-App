@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Posts App</string>
-    <string name="hello_home_fragment">Hello home fragment</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="read_more">Read More</string>
+    <string name="hide">Hide</string>
+    <string name="image">Image</string>
 </resources>
