@@ -75,4 +75,7 @@ dependencies {
 
     //Google Gson
     implementation "com.google.code.gson:gson:$gson_version"
+
+    implementation "com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1"
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
 }
