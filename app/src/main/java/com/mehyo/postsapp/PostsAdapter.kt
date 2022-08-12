@@ -30,7 +30,10 @@ class PostsAdapter : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
     }
 
     private val list = listOf(
-        Post("Hello 1 Hello World one", "Hello World one Hello 1 Hello World one"),
+        Post(
+            "Hello 1 Hello World one",
+            "Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one"
+        ),
         Post("Hello 2 Hello World Two", "Hello World Two Hello 2 Hello World Two"),
         Post("Hello 3 Hello World Three", "Hello World Three Hello 3 Hello World Three"),
         Post("Hello 4 Hello World Four", "Hello World Four Hello 4 Hello World Four"),

@@ -18,14 +18,32 @@
             android:id="@+id/action_homeFragment_to_createPostFragment"
             app:destination="@id/createPostFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/postDetailsFragment"
         android:name="com.mehyo.postsapp.PostDetailsFragment"
         android:label="Post Details"
-        tools:layout="@layout/fragment_post_details" />
+        tools:layout="@layout/fragment_post_details">
+        <argument
+            android:name="post"
+            android:defaultValue="@null"
+            app:argType="com.mehyo.postsapp.Post"
+            app:nullable="true" />
+    </fragment>
+
     <dialog
         android:id="@+id/createPostFragment"
         android:name="com.mehyo.postsapp.CreatePostFragment"
         android:label="fragment_create_post"
-        tools:layout="@layout/fragment_create_post" />
+        tools:layout="@layout/fragment_create_post">
+        <argument
+            android:name="input"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="post"
+            android:defaultValue="@null"
+            app:argType="com.mehyo.postsapp.Post"
+            app:nullable="true" />
+    </dialog>
 </navigation>

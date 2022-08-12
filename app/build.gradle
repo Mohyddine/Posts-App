@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -76,6 +77,7 @@ dependencies {
     //Google Gson
     implementation "com.google.code.gson:gson:$gson_version"
 
+    //swipe buttons for Recyclerview
     implementation "com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
 }
