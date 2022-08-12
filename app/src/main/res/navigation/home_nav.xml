@@ -14,10 +14,18 @@
         <action
             android:id="@+id/action_homeFragment_to_postDetailsFragment"
             app:destination="@id/postDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_createPostFragment"
+            app:destination="@id/createPostFragment" />
     </fragment>
     <fragment
         android:id="@+id/postDetailsFragment"
         android:name="com.mehyo.postsapp.PostDetailsFragment"
         android:label="Post Details"
         tools:layout="@layout/fragment_post_details" />
+    <dialog
+        android:id="@+id/createPostFragment"
+        android:name="com.mehyo.postsapp.CreatePostFragment"
+        android:label="fragment_create_post"
+        tools:layout="@layout/fragment_create_post" />
 </navigation>
