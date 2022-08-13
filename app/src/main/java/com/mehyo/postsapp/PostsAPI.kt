@@ -7,7 +7,9 @@ interface PostsAPI {
 
     //suspending function for GET network call to get all posts
     @GET("posts")
-    suspend fun getPosts(): Response<List<Post>>
+    suspend fun getPosts(
+        @Query(value = "userId") userId: Int = 1
+    ): Response<List<Post>>
 
     //suspending function for DELETE network call to delete a post by id
     @DELETE("posts/{id}")

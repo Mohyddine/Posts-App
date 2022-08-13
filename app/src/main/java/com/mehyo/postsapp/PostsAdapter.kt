@@ -1,5 +1,6 @@
 package com.mehyo.postsapp
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +9,7 @@ import com.mehyo.postsapp.databinding.PostRowItemBinding
 
 class PostsAdapter : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
 
+    private var list = listOf<Post>()
     private var onPostItemClickListener: ((Post) -> Unit)? = null
     private var onPostItemDeleteListener: ((Post) -> Unit)? = null
     private var onPostItemEditListener: ((Post) -> Unit)? = null
@@ -29,22 +31,11 @@ class PostsAdapter : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
         return this
     }
 
-    private val list = listOf(
-        Post(
-            title = "Hello 1 Hello World one",
-            body = "Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one"
-        ),
-        Post(title = "Hello 2 Hello World Two", body = "Hello World Two Hello 2 Hello World Two"),
-        Post(
-            title = "Hello 3 Hello World Three",
-            body = "Hello World Three Hello 3 Hello World Three"
-        ),
-        Post(
-            title = "Hello 4 Hello World Four",
-            body = "Hello World Four Hello 4 Hello World Four"
-        ),
-        Post(title = "Hello 5 Hello World Five", body = "Hello World Five Hello 5 Hello World Five")
-    )
+    @SuppressLint("NotifyDataSetChanged")
+    fun setData(list: List<Post>) {
+        this.list = list
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PostsViewHolder(
         PostRowItemBinding.inflate(

@@ -25,6 +25,9 @@ class CreatePostFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
+            ivClose.setOnClickListener {
+                this@CreatePostFragment.dismiss()
+            }
             when (args.input) {
                 Constants.CREATE -> {
                     tvLabelCreate.setText(R.string.create_a_new_post)

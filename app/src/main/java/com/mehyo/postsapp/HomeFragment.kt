@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mehyo.postsapp.databinding.FragmentHomeBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class HomeFragment : Fragment() {
@@ -16,6 +17,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var postsAdapter: PostsAdapter
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,8 +29,51 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        homeViewModel.getPostsAsync()
+        observeResult()
         initViews()
         initListeners()
+    }
+
+    private fun observeResult() {
+        homeViewModel.postsResultLiveData.observe(viewLifecycleOwner) { result ->
+            when (result.state) {
+                is ResourceState.LOADING -> {
+                    binding.apply {
+                        progressBar.visible()
+                        fabAdd.gone()
+                        tvError.gone()
+                        btnRefresh.gone()
+                    }
+                }
+
+                is ResourceState.SUCCESS -> {
+                    result.data?.let { listPostsData ->
+                        binding.apply {
+                            fabAdd.visible()
+                            progressBar.gone()
+                            tvError.gone()
+                            btnRefresh.gone()
+                        }
+                        initList(listPostsData)
+                    }
+                }
+
+                is ResourceState.ERROR -> {
+                    binding.apply {
+                        progressBar.gone()
+                        fabAdd.gone()
+                        tvError.visible()
+                        btnRefresh.visible()
+                    }
+                    initList(emptyList())
+                }
+            }
+        }
+    }
+
+    private fun initList(list: List<Post>) {
+        postsAdapter.setData(list)
     }
 
     private fun initViews() {
@@ -65,6 +110,9 @@ class HomeFragment : Fragment() {
             }
             fabAdd.setOnClickListener {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreatePostFragment())
+            }
+            btnRefresh.setOnClickListener {
+                homeViewModel.getPostsAsync()
             }
         }
     }
