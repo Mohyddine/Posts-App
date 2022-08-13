@@ -33,7 +33,7 @@ class CreatePostFragment : BottomSheetDialogFragment() {
                     tvLabelCreate.setText(R.string.edit_post)
                     args.post?.let {
                         edtPostTitle.setText(it.title)
-                        edtPostDesc.setText(it.desc)
+                        edtPostDesc.setText(it.body)
                     }
                 }
                 else -> {}

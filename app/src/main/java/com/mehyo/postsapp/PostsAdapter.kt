@@ -31,13 +31,19 @@ class PostsAdapter : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
 
     private val list = listOf(
         Post(
-            "Hello 1 Hello World one",
-            "Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one"
+            title = "Hello 1 Hello World one",
+            body = "Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one Hello World one Hello 1 Hello World one"
         ),
-        Post("Hello 2 Hello World Two", "Hello World Two Hello 2 Hello World Two"),
-        Post("Hello 3 Hello World Three", "Hello World Three Hello 3 Hello World Three"),
-        Post("Hello 4 Hello World Four", "Hello World Four Hello 4 Hello World Four"),
-        Post("Hello 5 Hello World Five", "Hello World Five Hello 5 Hello World Five")
+        Post(title = "Hello 2 Hello World Two", body = "Hello World Two Hello 2 Hello World Two"),
+        Post(
+            title = "Hello 3 Hello World Three",
+            body = "Hello World Three Hello 3 Hello World Three"
+        ),
+        Post(
+            title = "Hello 4 Hello World Four",
+            body = "Hello World Four Hello 4 Hello World Four"
+        ),
+        Post(title = "Hello 5 Hello World Five", body = "Hello World Five Hello 5 Hello World Five")
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PostsViewHolder(
@@ -58,7 +64,7 @@ class PostsAdapter : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
         fun bind(post: Post, viewBinderHelper: ViewBinderHelper) {
             with(binding) {
                 tvTitle.text = post.title
-                tvSubTitle.text = post.desc
+                tvSubTitle.text = post.body
                 main.setOnClickListener {
                     onPostItemClickListener?.invoke(post)
                 }

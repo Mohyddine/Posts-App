@@ -33,7 +33,7 @@ class PostDetailsFragment : Fragment() {
         with(binding) {
             args.post?.let {
                 tvTitle.text = it.title
-                tvDesc.text = it.desc
+                tvDesc.text = it.body
             }
             tvDesc.post {
                 when (tvDesc.lineCount) {
