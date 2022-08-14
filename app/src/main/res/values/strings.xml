@@ -14,4 +14,6 @@
     <string name="delete_post_message">You are about to delete this post. Are you sure you want to continue?</string>
     <string name="general_error">Something went wrong</string>
     <string name="refresh">Refresh</string>
+    <string name="cannot_edit">Cannot edit new posts</string>
+    <string name="required_fields">Title and Description fields are required</string>
 </resources>

@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.mehyo.postsapp.HomeFragment"
+        android:name="com.mehyo.postsapp.ui.fragments.HomeFragment"
         android:label="My Posts"
         tools:layout="@layout/fragment_home">
         <action
@@ -21,19 +21,19 @@
 
     <fragment
         android:id="@+id/postDetailsFragment"
-        android:name="com.mehyo.postsapp.PostDetailsFragment"
+        android:name="com.mehyo.postsapp.ui.fragments.PostDetailsFragment"
         android:label="Post Details"
         tools:layout="@layout/fragment_post_details">
         <argument
             android:name="post"
             android:defaultValue="@null"
-            app:argType="com.mehyo.postsapp.Post"
+            app:argType="com.mehyo.postsapp.model.Post"
             app:nullable="true" />
     </fragment>
 
     <dialog
         android:id="@+id/createPostFragment"
-        android:name="com.mehyo.postsapp.CreatePostFragment"
+        android:name="com.mehyo.postsapp.ui.fragments.CreatePostFragment"
         android:label="fragment_create_post"
         tools:layout="@layout/fragment_create_post">
         <argument
@@ -43,7 +43,7 @@
         <argument
             android:name="post"
             android:defaultValue="@null"
-            app:argType="com.mehyo.postsapp.Post"
+            app:argType="com.mehyo.postsapp.model.Post"
             app:nullable="true" />
     </dialog>
 </navigation>
