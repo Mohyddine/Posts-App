@@ -25,7 +25,7 @@ interface PostsAPI {
 
     //suspending function for PUT network call to edit a post by id
     @PUT("posts/{id}")
-    suspend fun editPost(
+    suspend fun editPostById(
         @Body body: Post,
         @Path("id") id: Int
     ): Response<Post>

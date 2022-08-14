@@ -20,8 +20,8 @@ class NetworkRepository(private val api: PostsAPI) {
     }
 
     //Edit a post by id from API
-    suspend fun editPost(body: Post, id: Int): Response<Post> {
-        return api.editPost(body, id)
+    suspend fun editPostById(body: Post, id: Int): Response<Post> {
+        return api.editPostById(body, id)
     }
 
     //Get a Post by id From API

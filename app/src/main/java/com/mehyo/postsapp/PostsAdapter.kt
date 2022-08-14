@@ -9,7 +9,7 @@ import com.mehyo.postsapp.databinding.PostRowItemBinding
 
 class PostsAdapter : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
 
-    private var list = listOf<Post>()
+    private var list = arrayListOf<Post>()
     private var onPostItemClickListener: ((Post) -> Unit)? = null
     private var onPostItemDeleteListener: ((Post) -> Unit)? = null
     private var onPostItemEditListener: ((Post) -> Unit)? = null
@@ -33,7 +33,20 @@ class PostsAdapter : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<Post>) {
-        this.list = list
+        this.list.clear()
+        this.list.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun addPost(post: Post) {
+        this.list.add(post)
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun removePost(post: Post) {
+        this.list.remove(post)
         notifyDataSetChanged()
     }
 

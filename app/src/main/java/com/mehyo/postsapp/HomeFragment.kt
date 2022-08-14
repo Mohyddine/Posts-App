@@ -9,7 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mehyo.postsapp.databinding.FragmentHomeBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class HomeFragment : Fragment() {
@@ -17,7 +17,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var postsAdapter: PostsAdapter
-    private val homeViewModel: HomeViewModel by viewModel()
+    private val homeViewModel: HomeViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,12 +30,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.getPostsAsync()
-        observeResult()
+        initObservables()
         initViews()
         initListeners()
     }
 
-    private fun observeResult() {
+    private fun initObservables() {
         homeViewModel.postsResultLiveData.observe(viewLifecycleOwner) { result ->
             when (result.state) {
                 is ResourceState.LOADING -> {
@@ -68,6 +68,51 @@ class HomeFragment : Fragment() {
                     }
                     initList(emptyList())
                 }
+            }
+        }
+
+        homeViewModel.editedPostLiveData.observe(viewLifecycleOwner) { data ->
+            data?.let { oldPost ->
+                postsAdapter.removePost(post = oldPost)
+            }
+        }
+
+        homeViewModel.addedPostLiveData.observe(viewLifecycleOwner) { post ->
+            post?.let { result ->
+                when (result.state) {
+                    is ResourceState.SUCCESS -> {
+                        result.data?.let { newPost ->
+                            postsAdapter.addPost(post = newPost)
+                        }
+                    }
+
+                    is ResourceState.ERROR -> {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.general_error),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else -> {}
+                }
+            }
+        }
+
+        homeViewModel.updatedPostLiveData.observe(viewLifecycleOwner) { result ->
+            when (result.state) {
+                is ResourceState.SUCCESS -> {
+                    result.data?.let { newPost ->
+                        postsAdapter.addPost(post = newPost)
+                    }
+                }
+                is ResourceState.ERROR -> {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.general_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else -> {}
             }
         }
     }
@@ -122,8 +167,13 @@ class HomeFragment : Fragment() {
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton("DELETE") { dialog, _ ->
-                Toast.makeText(requireContext(), "${post.title} is deleted", Toast.LENGTH_SHORT)
-                    .show()
+                post.id?.let { homeViewModel.deletePostAsync(it) }
+                postsAdapter.removePost(post)
+                Toast.makeText(
+                    requireContext(),
+                    "Post number ${post.id} deleted successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
                 dialog.dismiss()
             }
             .setNegativeButton("CANCEL") { dialog, _ ->
