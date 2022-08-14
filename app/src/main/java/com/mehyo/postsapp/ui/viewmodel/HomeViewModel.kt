@@ -22,8 +22,8 @@ class HomeViewModel(private val networkRepository: NetworkRepository) : ViewMode
     private var addedPost = MutableLiveData<Resource<Post>>()
     val addedPostLiveData: LiveData<Resource<Post>> get() = addedPost
 
-    private var editedPost = MutableLiveData<Post?>(null)
-    val editedPostLiveData: LiveData<Post?> get() = editedPost
+    private var oldPost = MutableLiveData<Post?>(null)
+    val oldPostLiveData: LiveData<Post?> get() = oldPost
 
     private var updatedPost = MutableLiveData<Resource<Post>>()
     val updatedPostLiveData: LiveData<Resource<Post>> get() = updatedPost
@@ -31,10 +31,19 @@ class HomeViewModel(private val networkRepository: NetworkRepository) : ViewMode
     private var deletePost = MutableLiveData<Resource<Any?>>()
     val deletePostLiveData: LiveData<Resource<Any?>> get() = deletePost
 
-    fun editPost(post: Post) {
-        editedPost.value = post
+    /**
+     * function to send old post from
+     * bottomSheet to home screen.
+     */
+    fun sendOldPost(oldPost: Post) {
+        this.oldPost.value = oldPost
     }
 
+    /**
+     * suspending function to get all posts
+     * from the server, then saves the list
+     * in a live data.
+     */
     private suspend fun getPosts() {
         postsResult.setLoading()
         try {
@@ -46,6 +55,12 @@ class HomeViewModel(private val networkRepository: NetworkRepository) : ViewMode
         }
     }
 
+    /**
+     * suspending function to edit a post
+     * using its id from the server,
+     * then saves the edited post
+     * in a live data.
+     */
     private suspend fun editPostById(post: Post, id: Int) {
         updatedPost.setLoading()
         try {
@@ -57,6 +72,11 @@ class HomeViewModel(private val networkRepository: NetworkRepository) : ViewMode
         }
     }
 
+    /**
+     * suspending function to add a new post
+     * to the server, then saves
+     * the edited post in a live data.
+     */
     private suspend fun addPost(post: Post) {
         addedPost.setLoading()
         try {
@@ -68,6 +88,11 @@ class HomeViewModel(private val networkRepository: NetworkRepository) : ViewMode
         }
     }
 
+    /**
+     * suspending function to delete a post
+     * from the server, then saves
+     * an emptyList in a live data.
+     */
     private suspend fun deletePost(id: Int) {
         addedPost.setLoading()
         try {
@@ -79,22 +104,42 @@ class HomeViewModel(private val networkRepository: NetworkRepository) : ViewMode
         }
     }
 
+    /**
+     * function to run the getPosts function
+     * asynchronously using kotlin coroutines.
+     */
     fun getPostsAsync() {
         launchAsync { getPosts() }
     }
 
+    /**
+     * function to run the editPostById function
+     * asynchronously using kotlin coroutines.
+     */
     fun editPostByIdAsync(post: Post, id: Int) {
         launchAsync { editPostById(post, id) }
     }
 
+    /**
+     * function to run the addPost function
+     * asynchronously using kotlin coroutines.
+     */
     fun addPostAsync(post: Post) {
         launchAsync { addPost(post) }
     }
 
+    /**
+     * function to run the deletePost function
+     * asynchronously using kotlin coroutines.
+     */
     fun deletePostAsync(id: Int) {
         launchAsync { deletePost(id) }
     }
 
+    /**
+     * function to run the any suspending function
+     * asynchronously using kotlin coroutines.
+     */
     private fun launchAsync(method: suspend () -> Unit) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {

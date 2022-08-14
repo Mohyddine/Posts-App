@@ -43,6 +43,13 @@ class HomeFragment : Fragment() {
         initListeners()
     }
 
+    /**
+     * function to initialise the Observables.
+     * here we observe on: postsResultLiveData to get the list of posts from the server,
+     * oldPostLiveData to get the old post from the bottom sheet,
+     * addedPostLiveData to get the added post from the server,
+     * updatedPostLiveData to get the edited post from the server.
+     */
     private fun initObservables() {
         homeViewModel.postsResultLiveData.observe(viewLifecycleOwner) { result ->
             when (result.state) {
@@ -79,7 +86,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        homeViewModel.editedPostLiveData.observe(viewLifecycleOwner) { data ->
+        homeViewModel.oldPostLiveData.observe(viewLifecycleOwner) { data ->
             data?.let { oldPost ->
                 postsAdapter.removePost(post = oldPost)
             }
@@ -125,10 +132,16 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * function to initialise the list.
+     */
     private fun initList(list: List<Post>) {
         postsAdapter.setData(list)
     }
 
+    /**
+     * function to initialise the views.
+     */
     private fun initViews() {
         postsAdapter = PostsAdapter()
         with(binding) {
@@ -136,6 +149,9 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * function to initialise Listeners.
+     */
     private fun initListeners() {
         with(binding) {
 
@@ -178,6 +194,12 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * function to create the alertDialog the delete action is clicked,
+     * if the user clicked DELETE deletePostAsync will be
+     * called to delete the post from the server
+     * and finally removing the post from the list.
+     */
     private fun createAlertDialog(title: String, message: String, post: Post) {
         AlertDialog.Builder(requireContext())
             .setTitle(title)

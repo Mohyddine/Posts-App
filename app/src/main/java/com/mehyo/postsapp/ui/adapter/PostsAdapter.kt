@@ -17,21 +17,38 @@ class PostsAdapter : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
 
     private val viewBinderHelper = ViewBinderHelper()
 
+    /**
+     * function to implement item ClickListener
+     * to get the clicked post object.
+     */
     fun setOnPostItemClickListener(onPostItemClickListener: (Post) -> Unit): PostsAdapter {
         this.onPostItemClickListener = onPostItemClickListener
         return this
     }
 
+    /**
+     * function to implement item ClickListener
+     * for deleting the clicked post.
+     */
     fun setOnPostItemDeleteListener(onPostItemDeleteListener: (Post) -> Unit): PostsAdapter {
         this.onPostItemDeleteListener = onPostItemDeleteListener
         return this
     }
 
+    /**
+     * function to implement item ClickListener
+     * for editing the clicked post.
+     */
     fun setOnPostItemEditListener(onPostItemEditListener: (Post) -> Unit): PostsAdapter {
         this.onPostItemEditListener = onPostItemEditListener
         return this
     }
 
+    /**
+     * function for adding
+     * all the posts to the list
+     * then updating it.
+     */
     @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<Post>) {
         this.list.clear()
@@ -39,12 +56,22 @@ class PostsAdapter : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
         notifyDataSetChanged()
     }
 
+    /**
+     * function for adding
+     * a post to the list
+     * then updating it.
+     */
     @SuppressLint("NotifyDataSetChanged")
     fun addPost(post: Post) {
         this.list.add(post)
         notifyDataSetChanged()
     }
 
+    /**
+     * function for removing
+     * a post from the list
+     * then updating it.
+     */
     @SuppressLint("NotifyDataSetChanged")
     fun removePost(post: Post) {
         this.list.remove(post)
@@ -64,8 +91,17 @@ class PostsAdapter : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
 
     override fun getItemCount() = list.size
 
+    /**
+     * ViewHolder created for the Recyclerview Adapter and to
+     * set the data in each row in the UI,
+     * implement ClickListener.
+     */
     inner class PostsViewHolder(private val binding: PostRowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        /**
+         * Set the data in each row in the UI,
+         * implement ClickListener.
+         */
         fun bind(post: Post, viewBinderHelper: ViewBinderHelper) {
             with(binding) {
                 tvTitle.text = post.title

@@ -36,6 +36,9 @@ class CreatePostFragment : BottomSheetDialogFragment() {
         initListeners()
     }
 
+    /**
+     * function to initialise the views.
+     */
     private fun initViews() {
         with(binding) {
             when (args.input) {
@@ -54,6 +57,9 @@ class CreatePostFragment : BottomSheetDialogFragment() {
         }
     }
 
+    /**
+     * function to initialise Listeners.
+     */
     private fun initListeners() {
         with(binding) {
             ivClose.setOnClickListener {
@@ -72,6 +78,15 @@ class CreatePostFragment : BottomSheetDialogFragment() {
         }
     }
 
+    /**
+     * function to do the editPost action
+     * 1st we check if all the fields are not empty,
+     * then we send the old post to the home screen,
+     * then we create a new post using the fields input
+     * and finally we call editPostByIdAsync
+     * to edit the post on the server after that
+     * the bottom sheet will be dismissed.
+     */
     private fun editPost() {
         if (TextUtils.isEmpty(binding.edtPostTitle.text.toString().trim())
             or
@@ -88,12 +103,20 @@ class CreatePostFragment : BottomSheetDialogFragment() {
                 title = binding.edtPostTitle.text.toString().trim(),
                 body = binding.edtPostDesc.text.toString().trim()
             )
-            args.post?.let { homeViewModel.editPost(it) }
+            args.post?.let { homeViewModel.sendOldPost(it) }
             args.post?.id?.let { homeViewModel.editPostByIdAsync(newPost, it) }
             this@CreatePostFragment.dismiss()
         }
     }
 
+    /**
+     * function to do the addPost action
+     * 1st we check if all the fields are not empty,
+     * then we create a new post object using the fields input
+     * and finally we call addPostAsync
+     * to create the post on the server after that
+     * the bottom sheet will be dismissed.
+     */
     private fun addPost() {
         if (TextUtils.isEmpty(binding.edtPostTitle.text.toString().trim())
             or

@@ -7,14 +7,17 @@ import org.koin.core.context.startKoin
 
 class PostsApp : Application() {
 
+    /**
+     * Starting for DI.
+     * then added the Koin Android logger
+     * after that injected the Android context
+     * and finally added all the modules
+     */
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            // Koin Android logger
             androidLogger()
-            //inject Android context
             androidContext(this@PostsApp)
-            // use modules
             modules(listOf(networkModule, repositoryModule, viewModelModule))
         }
     }

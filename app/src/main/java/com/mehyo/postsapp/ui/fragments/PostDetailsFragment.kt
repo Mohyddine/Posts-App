@@ -32,6 +32,9 @@ class PostDetailsFragment : Fragment() {
         initListeners()
     }
 
+    /**
+     * function to initialise the views.
+     */
     private fun initViews() {
         with(binding) {
             args.post?.let {
@@ -51,6 +54,9 @@ class PostDetailsFragment : Fragment() {
         }
     }
 
+    /**
+     * function to initialise Listeners.
+     */
     private fun initListeners() {
         with(binding) {
             tvReadMore.setOnClickListener {

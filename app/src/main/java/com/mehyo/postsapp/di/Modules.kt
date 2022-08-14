@@ -9,12 +9,17 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-//Network modules
+/**
+ * Network modules:
+ * created network api using retrofit variable.
+ * then building retrofit variable.
+ * And finally created singleton values
+ * to inject in constructors the when needed.
+ */
+
 val networkModule = module {
-    //creating network api using retrofit variable
     fun createNetworkApi(retrofit: Retrofit) = retrofit.create(PostsAPI::class.java)
 
-    //Building retrofit variable
     fun retrofitBuilder() = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(Constants.BASE_URL)
@@ -24,12 +29,20 @@ val networkModule = module {
     single { retrofitBuilder() }
 }
 
-//Repository modules
+/**
+ * Repository modules:
+ * created a singleton value
+ * to inject in constructors the when needed.
+ */
 val repositoryModule = module {
     single { NetworkRepository(api = get()) }
 }
 
-//ViewModel modules
+/**
+ * ViewModel modules:
+ * created a singleton value
+ * to inject viewModel objects the when needed.
+ */
 val viewModelModule = module {
     viewModel { HomeViewModel(networkRepository = get()) }
 }

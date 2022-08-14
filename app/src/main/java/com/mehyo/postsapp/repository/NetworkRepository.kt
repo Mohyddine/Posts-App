@@ -6,27 +6,47 @@ import retrofit2.Response
 
 class NetworkRepository(private val api: PostsAPI) {
 
-    //Get Posts From API
+    /**
+     * suspending function to
+     * get Posts from API.
+     * @return all posts.
+     */
     suspend fun getPosts(): Response<List<Post>> {
         return api.getPosts()
     }
 
-    //Delete a post by id from API
+    /**
+     * suspending function to
+     * delete a post by id from API
+     * @return an emptyList.
+     */
     suspend fun deletePostById(id: Int): Response<Any?> {
         return api.deletePostById(id)
     }
 
-    //Add a new post to API
+    /**
+     * suspending function to
+     * add a new post to API.
+     * @return the newly created post.
+     */
     suspend fun addPost(body: Post): Response<Post> {
         return api.addPost(body)
     }
 
-    //Edit a post by id from API
+    /**
+     * suspending function to
+     * edit a post by id from API
+     * @return the edited post.
+     */
     suspend fun editPostById(body: Post, id: Int): Response<Post> {
         return api.editPostById(body, id)
     }
 
-    //Get a Post by id From API
+    /**
+     * suspending function to
+     * get a Post by id From API.
+     * @return the requested post details.
+     */
     suspend fun getPostById(id: Int): Response<Post> {
         return api.getPostById(id)
     }
